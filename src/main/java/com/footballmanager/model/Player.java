@@ -6,10 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,14 +19,29 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @Size(min = 3, max = 250, message = "First name must be between 3 and 250 characters")
     private String firstName;
-    @NotNull
-    @Size(min = 3, max = 250, message = "Last name must be between 3 and 250 characters")
     private String lastName;
-    @Positive
     private Short age;
-    @PositiveOrZero
     private Short experienceMonths;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(id, player.id)
+                && firstName.equals(player.firstName)
+                && lastName.equals(player.lastName)
+                && Objects.equals(age, player.age)
+                && Objects.equals(experienceMonths, player.experienceMonths);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, age, experienceMonths);
+    }
 }
