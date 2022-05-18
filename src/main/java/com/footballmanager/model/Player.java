@@ -23,25 +23,4 @@ public class Player {
     private String lastName;
     private Short age;
     private Short experienceMonths;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Player player = (Player) o;
-        return Objects.equals(id, player.id)
-                && firstName.equals(player.firstName)
-                && lastName.equals(player.lastName)
-                && Objects.equals(age, player.age)
-                && Objects.equals(experienceMonths, player.experienceMonths);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, experienceMonths);
-    }
 }

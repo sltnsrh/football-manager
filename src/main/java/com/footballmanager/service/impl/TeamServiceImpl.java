@@ -1,8 +1,10 @@
 package com.footballmanager.service.impl;
 
+import com.footballmanager.model.Player;
 import com.footballmanager.model.Team;
 import com.footballmanager.repository.TeamRepository;
 import com.footballmanager.service.TeamService;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team save(Team team) {
+        List<Player> players = new ArrayList<>();
+        team.setPlayers(players);
         return teamRepository.save(team);
     }
 
@@ -37,5 +41,25 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void delete(Long id) {
         teamRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Player> getPlayersByTeam(Long teamId) {
+        Team team = teamRepository.getById(teamId);
+        return team.getPlayers();
+    }
+
+    @Override
+    public void addPlayerToTeam(Long teamId, Player player) {
+        Team team = teamRepository.getById(teamId);
+        team.getPlayers().add(player);
+        teamRepository.save(team);
+    }
+
+    @Override
+    public void removePlayerFromTeam(Long teamId, Player player) {
+        Team team = teamRepository.getById(teamId);
+        team.getPlayers().remove(player);
+        teamRepository.save(team);
     }
 }

@@ -29,29 +29,7 @@ public class Team {
     @JoinTable(name = "teams_players",
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id"))
-    @ToString.Exclude
     private List<Player> players;
     private BigDecimal count;
     private BigDecimal commission;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Team team = (Team) o;
-        return Objects.equals(id, team.id)
-                && name.equals(team.name)
-                && Objects.equals(players, team.players)
-                && Objects.equals(count, team.count)
-                && Objects.equals(commission, team.commission);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, players, count, commission);
-    }
 }

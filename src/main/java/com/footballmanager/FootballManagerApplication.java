@@ -16,5 +16,4 @@ public class FootballManagerApplication {
     public static void main(String[] args) {
         SpringApplication.run(FootballManagerApplication.class, args);
     }
-
 }
