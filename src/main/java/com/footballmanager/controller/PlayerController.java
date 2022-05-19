@@ -3,7 +3,9 @@ package com.footballmanager.controller;
 import com.footballmanager.dto.request.PlayerRequestDto;
 import com.footballmanager.dto.response.PlayerResponseDto;
 import com.footballmanager.model.Player;
+import com.footballmanager.dto.request.TransactionRequestDto;
 import com.footballmanager.service.PlayerService;
+import com.footballmanager.service.TransactionService;
 import com.footballmanager.service.mapper.RequestDtoMapper;
 import com.footballmanager.service.mapper.ResponseDtoMapper;
 import java.util.List;
@@ -21,13 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/players")
 public class PlayerController {
     private final PlayerService playerService;
+    private final TransactionService<TransactionRequestDto> transactionService;
     private final RequestDtoMapper<Player, PlayerRequestDto> requestDtoMapper;
     private final ResponseDtoMapper<Player, PlayerResponseDto> responseDtoMapper;
 
     public PlayerController(PlayerService playerService,
+                            TransactionService<TransactionRequestDto> transactionService,
                             RequestDtoMapper<Player, PlayerRequestDto> requestDtoMapper,
                             ResponseDtoMapper<Player, PlayerResponseDto> responseDtoMapper) {
         this.playerService = playerService;
+        this.transactionService = transactionService;
         this.requestDtoMapper = requestDtoMapper;
         this.responseDtoMapper = responseDtoMapper;
     }
@@ -63,5 +68,10 @@ public class PlayerController {
     @DeleteMapping("/{id}")
     void delete(@PathVariable Long id) {
         playerService.delete(id);
+    }
+
+    @PutMapping("/transaction")
+    void transferPlayer(@RequestBody TransactionRequestDto transactionRequestDto) {
+        transactionService.doTransaction(transactionRequestDto);
     }
 }

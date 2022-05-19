@@ -80,6 +80,7 @@ public class TeamController {
     @PutMapping("/{teamId}/players/{playerId}")
     public void addPlayerToTeam(@PathVariable Long teamId, @PathVariable Long playerId) {
         Player player = playerService.get(playerId);
-        teamService.addPlayerToTeam(teamId, player);
+        Team team = teamService.get(teamId);
+        teamService.addPlayerToTeam(team, player);
     }
 }

@@ -4,6 +4,7 @@ import com.footballmanager.model.Player;
 import com.footballmanager.model.Team;
 import com.footballmanager.repository.TeamRepository;
 import com.footballmanager.service.TeamService;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -50,16 +51,26 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public void addPlayerToTeam(Long teamId, Player player) {
-        Team team = teamRepository.getById(teamId);
+    public void addPlayerToTeam(Team team, Player player) {
         team.getPlayers().add(player);
         teamRepository.save(team);
     }
 
     @Override
-    public void removePlayerFromTeam(Long teamId, Player player) {
-        Team team = teamRepository.getById(teamId);
+    public void removePlayerFromTeam(Team team, Player player) {
         team.getPlayers().remove(player);
+        teamRepository.save(team);
+    }
+
+    @Override
+    public void addToCount(Team team, BigDecimal incomeSum) {
+        team.setCount(team.getCount().add(incomeSum));
+        teamRepository.save(team);
+    }
+
+    @Override
+    public void subtractFromCount(Team team, BigDecimal outSum) {
+        team.setCount(team.getCount().subtract(outSum));
         teamRepository.save(team);
     }
 }
