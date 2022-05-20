@@ -15,4 +15,6 @@ public interface TeamService extends CrudService<Team, Long> {
     void addToCount(Team team, BigDecimal incomeSum);
 
     void subtractFromCount(Team team, BigDecimal outSum);
+
+    Team getTeamByPlayer(Player player);
 }

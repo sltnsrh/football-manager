@@ -73,4 +73,9 @@ public class TeamServiceImpl implements TeamService {
         team.setCount(team.getCount().subtract(outSum));
         teamRepository.save(team);
     }
+
+    @Override
+    public Team getTeamByPlayer(Player player) {
+        return teamRepository.getTeamByPlayer(player);
+    }
 }
