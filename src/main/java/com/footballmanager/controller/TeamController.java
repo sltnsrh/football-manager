@@ -4,12 +4,12 @@ import com.footballmanager.dto.request.TeamRequestDto;
 import com.footballmanager.dto.response.TeamResponseDto;
 import com.footballmanager.model.Player;
 import com.footballmanager.model.Team;
-import com.footballmanager.service.PlayerService;
 import com.footballmanager.service.TeamService;
 import com.footballmanager.service.mapper.RequestDtoMapper;
 import com.footballmanager.service.mapper.ResponseDtoMapper;
 import java.util.List;
 import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,23 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/teams")
 public class TeamController {
     private final TeamService teamService;
-    private final PlayerService playerService;
     private final RequestDtoMapper<Team, TeamRequestDto> requestDtoMapper;
     private final ResponseDtoMapper<Team, TeamResponseDto> responseDtoMapper;
-
-    public TeamController(TeamService teamService,
-                          PlayerService playerService,
-                          RequestDtoMapper<Team, TeamRequestDto> requestDtoMapper,
-                          ResponseDtoMapper<Team, TeamResponseDto> responseDtoMapper) {
-        this.teamService = teamService;
-        this.playerService = playerService;
-        this.requestDtoMapper = requestDtoMapper;
-        this.responseDtoMapper = responseDtoMapper;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -79,14 +69,5 @@ public class TeamController {
     @GetMapping("/{id}/players")
     public List<Player> getPlayers(@PathVariable Long id) {
         return teamService.getPlayersByTeam(id);
-    }
-
-    @PutMapping("/{teamId}/players/{playerId}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT,
-            reason = "Player successfully was added to the team")
-    public void addPlayerToTeam(@PathVariable Long teamId, @PathVariable Long playerId) {
-        Player player = playerService.get(playerId);
-        Team team = teamService.get(teamId);
-        teamService.addPlayerToTeam(team, player);
     }
 }

@@ -6,18 +6,15 @@ import com.footballmanager.repository.PlayerRepository;
 import com.footballmanager.service.PlayerService;
 import com.footballmanager.service.TeamService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 public class PlayerServiceImpl implements PlayerService {
     private final PlayerRepository playerRepository;
     private final TeamService teamService;
-
-    public PlayerServiceImpl(PlayerRepository playerRepository, TeamService teamService) {
-        this.playerRepository = playerRepository;
-        this.teamService = teamService;
-    }
 
     @Override
     public Player save(Player player) {

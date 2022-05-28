@@ -7,15 +7,13 @@ import com.footballmanager.service.TeamService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class TeamServiceImpl implements TeamService {
     private  final TeamRepository teamRepository;
-
-    public TeamServiceImpl(TeamRepository teamRepository) {
-        this.teamRepository = teamRepository;
-    }
 
     @Override
     public Team save(Team team) {
