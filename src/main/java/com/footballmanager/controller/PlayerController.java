@@ -68,7 +68,7 @@ public class PlayerController {
 
     @PutMapping("/transaction")
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Successful player transfer")
-    void transferPlayer(@Valid @RequestBody TransactionRequestDto transactionRequestDto) {
+    void transferPlayer(@Valid @RequestBody TransactionRequestDto transactionRequestDto) throws Exception {
         transactionService.doPlayerTransaction(transactionRequestDto);
     }
 }
