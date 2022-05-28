@@ -10,6 +10,7 @@ import com.footballmanager.service.mapper.RequestDtoMapper;
 import com.footballmanager.service.mapper.ResponseDtoMapper;
 import java.util.List;
 import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,29 +22,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/players")
 public class PlayerController {
     private final PlayerService playerService;
-    private final TransactionService<TransactionRequestDto> transactionService;
+    private final TransactionService transactionService;
     private final RequestDtoMapper<Player, PlayerRequestDto> requestDtoMapper;
     private final ResponseDtoMapper<Player, PlayerResponseDto> responseDtoMapper;
-
-    public PlayerController(PlayerService playerService,
-                            TransactionService<TransactionRequestDto> transactionService,
-                            RequestDtoMapper<Player, PlayerRequestDto> requestDtoMapper,
-                            ResponseDtoMapper<Player, PlayerResponseDto> responseDtoMapper) {
-        this.playerService = playerService;
-        this.transactionService = transactionService;
-        this.requestDtoMapper = requestDtoMapper;
-        this.responseDtoMapper = responseDtoMapper;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PlayerResponseDto add(@Valid @RequestBody PlayerRequestDto playerRequestDto) {
-        Player player = playerService.save(requestDtoMapper.mapToModel(playerRequestDto));
-        return responseDtoMapper.mapToDto(player);
+        Player player = requestDtoMapper.mapToModel(playerRequestDto);
+        return responseDtoMapper.mapToDto(playerService.save(player));
     }
 
     @GetMapping
@@ -77,6 +69,6 @@ public class PlayerController {
     @PutMapping("/transaction")
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Successful player transfer")
     void transferPlayer(@Valid @RequestBody TransactionRequestDto transactionRequestDto) {
-        transactionService.doTransaction(transactionRequestDto);
+        transactionService.doPlayerTransaction(transactionRequestDto);
     }
 }

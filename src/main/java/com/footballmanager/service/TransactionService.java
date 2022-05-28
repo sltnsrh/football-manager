@@ -1,5 +1,7 @@
 package com.footballmanager.service;
 
-public interface TransactionService<T> {
-    void doTransaction(T t);
+import com.footballmanager.dto.request.TransactionRequestDto;
+
+public interface TransactionService {
+    void doPlayerTransaction(TransactionRequestDto transactionRequestDto);
 }

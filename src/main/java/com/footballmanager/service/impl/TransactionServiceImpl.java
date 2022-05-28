@@ -7,22 +7,19 @@ import com.footballmanager.service.PlayerService;
 import com.footballmanager.service.TeamService;
 import com.footballmanager.service.TransactionService;
 import java.math.BigDecimal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
-public class TransactionServiceImpl implements TransactionService<TransactionRequestDto> {
+public class TransactionServiceImpl implements TransactionService {
     private final PlayerService playerService;
     private final TeamService teamService;
 
-    public TransactionServiceImpl(PlayerService playerService, TeamService teamService) {
-        this.playerService = playerService;
-        this.teamService = teamService;
-    }
-
     @Override
     @Transactional
-    public void doTransaction(TransactionRequestDto transactionRequestDto) {
+    public void doPlayerTransaction(TransactionRequestDto transactionRequestDto) {
         Player player = playerService.get(transactionRequestDto.getPlayerId());
         BigDecimal playerPrice = BigDecimal
                 .valueOf(player.getExperienceMonths() * 100000 / player.getAge());

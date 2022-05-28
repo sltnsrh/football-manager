@@ -10,6 +10,7 @@ import com.footballmanager.service.mapper.RequestDtoMapper;
 import com.footballmanager.service.mapper.ResponseDtoMapper;
 import java.util.List;
 import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/teams")
 public class TeamController {
@@ -28,16 +30,6 @@ public class TeamController {
     private final PlayerService playerService;
     private final RequestDtoMapper<Team, TeamRequestDto> requestDtoMapper;
     private final ResponseDtoMapper<Team, TeamResponseDto> responseDtoMapper;
-
-    public TeamController(TeamService teamService,
-                          PlayerService playerService,
-                          RequestDtoMapper<Team, TeamRequestDto> requestDtoMapper,
-                          ResponseDtoMapper<Team, TeamResponseDto> responseDtoMapper) {
-        this.teamService = teamService;
-        this.playerService = playerService;
-        this.requestDtoMapper = requestDtoMapper;
-        this.responseDtoMapper = responseDtoMapper;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

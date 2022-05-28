@@ -1,6 +1,8 @@
 package com.footballmanager.dto.request;
 
 import java.math.BigDecimal;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -15,6 +17,7 @@ public class TeamRequestDto {
     @PositiveOrZero(message = "Count value must be positive or zero")
     private BigDecimal count;
     @NotNull(message = "Team commission can't be null")
-    @PositiveOrZero(message = "Team commission must be positive or zero")
+    @Min(value = 0, message = "Team commission must be minimum 0")
+    @Max(value = 10, message = "Team commission must be maximum 10")
     private BigDecimal commission;
 }
